@@ -13,7 +13,7 @@ int main(){
 
     printf("8 Numbers beside 0 and 20:\n");
     for(int i = 0; i < 8; i++){
-        printf("Number : %d\n", ((rand()%20)+1));
+        printf("Number : %d\n", (rand()%20)+1);
     }
     return 0;
 }
