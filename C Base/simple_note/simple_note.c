@@ -4,14 +4,13 @@
 #include<fcntl.h>
 #include<sys/stat.h>
 #include<unistd.h>
+#include<hacking.h>
 
 void usage(char *prog_name, char *file_name){
     printf("Usage: %s <data add to> %s\n", prog_name, file_name);
     exit(0);
 }
 
-void fatal(char *);
-void *updatedMalloc(unsigned int);
 
 int main(int argc, char *argv[]){
     int fdescrypt;
@@ -49,25 +48,4 @@ int main(int argc, char *argv[]){
     free(buffer);
 
     return 0;
-}
-
-void fatal(char *message){
-    char error_message[100];
-
-    strcpy(error_message, "[!] critical error\n");
-    strncat(error_message, message, 83);
-    perror(error_message);
-    exit(-1);
-}
-
-void *updatedMalloc(unsigned int size){
-    void *ptr;
-
-    ptr = malloc(size);
-
-    if(ptr == NULL){
-        fatal("fatal in func updatedMalloc when malloc\n");
-    }
-
-    return ptr;
 }
