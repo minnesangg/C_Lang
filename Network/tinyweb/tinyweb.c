@@ -101,5 +101,14 @@ void handle_connection(int sockfd, struct sockaddr_in *client_addr_ptr){
             close(fd);
         }
     }
+    }
+    shutdown(sockfd, SHUT_RDWR);
 }
+
+int get_file_size(int fd) {
+    struct stat stat_struct;
+
+    if(fstat(fd, &stat_struct) == -1)
+        return -1;
+    return (int) stat_struct.st_size;
 }
