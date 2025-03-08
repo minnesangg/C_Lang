@@ -89,6 +89,11 @@ void handle_connection(int sockfd, struct sockaddr_in *client_addr_ptr){
         } else {
             printf(" 200 OK\n");
             send_string(sockfd, "HTTP/1.0 200 OK\r\n");
+            if (strstr(ptr, ".jpg") != NULL) {
+                send_string(sockfd, "Content-Type: image/jpeg\r\n");
+            } else {
+                send_string(sockfd, "Content-Type: text/html\r\n");
+            }            
             send_string(sockfd, "Server: Tiny webserver\r\n\r\n");
             if(ptr == request + 4){
                 if( (length = get_file_size(fd)) == -1)
