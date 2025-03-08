@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 #include <hacking.h>
 #include <hacking_network.h>
 
@@ -25,7 +26,7 @@ int main(void){
     if((sockfd = socket(PF_INET,SOCK_STREAM, 0)) == -1)
         fatal("in socket");
 
-    if(setsockopt(sockfd, SOL_SOCKET, SO REUSEADDR, &yes, sizeof(int)) == -1)
+    if(setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1)
         fatal("while adding parameter SO_REUSEADDR");
 
     host_addr.sin_family = AF_INET;
@@ -78,7 +79,7 @@ void handle_connection(int sockfd, struct sockaddr_in *client_addr_ptr){
 
         strcat(resource, ptr);
         fd = open(resource, O_RDONLY, 0);
-        printf("\tOpenning \'%s\ '\t", resource);
+        printf("\tOpenning \'%s\'\t", resource);
         if(fd == -1){
             printf(" 404 Not Found\n");
             send_string(sockfd, "HTTP/1.0 404 NOT FOUND\r\n");
