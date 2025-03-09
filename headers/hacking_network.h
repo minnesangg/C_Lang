@@ -4,7 +4,51 @@
 #include <sys/socket.h>
 
 typedef unsigned char uchar;
+typedef unsigned short ushort;
+typedef unsigned int uint;
 
+#define ETHER_ADDR_LEN 6
+#define ETHER_HDR_LEN 16
+
+struct ether_hdr{
+	uchar  ether_dest_addr[ETHER_ADDR_LEN];
+	uchar ether_src_addr[ETHER_ADDR_LEN];
+	ushort ether_type;
+};
+
+struct ip_hdr{
+uchar ip_version_and_header_length;
+	uchar ip_tos;
+	ushort ip_len;
+	ushort ip_id;
+	ushort ip_frag_offset;
+	uchar ip_ttl;
+	uchar ip_type;
+	ushort ip_checksum;
+	uint ip_src_addr;
+	uint ip_dest_addr;
+};
+
+struct tcp_hdr{
+	ushort tcp_src_port;
+	ushort tcp_dest_port;
+	uint tcp_seq;
+	uint tcp_ack;
+	uchar reserved:4;
+	uchar tcp_offset:4;
+	
+	uchar tcp_flags;
+#define TCP_FIN 0x01
+#define TCP_SYN 0x02
+#define TCP_RST 0x04
+#define TCP_PUSH 0x08
+#define TCP_ACK 0x10
+#define TCP_URG 0x20
+	ushort tcp_window;
+	ushort tcp_checksum;
+	ushort tcp_urgent;
+};
+	
 int send_string(int sock_fd, uchar *buffer){
     int sent_bytes, bytes_to_send;
     bytes_to_send = strlen((char *)buffer);
@@ -44,4 +88,3 @@ int recv_line(int sock_fd, uchar *dest_buffer){
     }
     return 0;
 }
-
